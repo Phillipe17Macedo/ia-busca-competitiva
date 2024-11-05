@@ -1,41 +1,162 @@
+/* Estilo Geral */
 body {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  margin: 0;
+  color: #333;
+  background: linear-gradient(135deg, #e0e0e0, #bdbdbd);
+  height: 100vh;
+  overflow: hidden;
 }
 
-h1 {
-  margin-top: 20px;
+/* Tela Inicial */
+#home-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-#board {
+/* Título do Jogo */
+.game-title {
+  font-family: "Fredoka One", sans-serif;
+  font-size: 8vw; /* Tamanho responsivo baseado na largura da tela */
+  color: #2196f3;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), -2px -2px 4px #ffeb3b;
+  margin-bottom: 20px;
+  animation: bounce 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+/* Tabuleiro de Exemplo */
+.game-board-placeholder {
+  width: 500px; /* Baseado na largura da tela */
+  height: 600px; /* Proporcional à largura */
+  background-color: #1976d2;
+  border-radius: 15px;
   display: grid;
-  grid-template-columns: repeat(8, 50px);
-  grid-template-rows: repeat(7, 50px);
-  gap: 5px;
-  margin: 20px;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 1.5vw; /* Espaço responsivo entre as células */
+  padding: 2vw;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  margin-bottom: 40px;
+  position: relative;
 }
 
+/* Células do Tabuleiro de Exemplo */
 .cell {
-  width: 50px;
-  height: 50px;
-  background-color: #eee;
+  width: 100%;
+  height: 100%;
+  background-color: #ffeb3b;
   border-radius: 50%;
-  border: 1px solid #333;
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.3s ease;
 }
 
-.player1 {
-  background-color: red;
+/* Efeito de célula vazia e preenchida */
+.cell:nth-child(odd) {
+  background-color: #f44336;
 }
 
-.player2 {
-  background-color: yellow;
+.cell:nth-child(even) {
+  background-color: #ffeb3b;
 }
 
-#controls {
+.cell:hover {
+  background-color: #ffc107;
+}
+
+/* Botão Play com Efeitos */
+#play-button {
+  font-size: 2vw;
+  padding: 1.5vw 3vw;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+#play-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: skewX(-30deg);
+  transition: all 0.5s;
+}
+
+#play-button:hover::before {
+  left: 100%;
+}
+
+#play-button:hover {
+  background-color: #388e3c;
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  .game-title {
+    font-size: 10vw; /* Aumenta o título em telas menores */
+  }
+
+  .game-board-placeholder {
+    width: 80vw;
+    height: 70vw;
+    gap: 2vw;
+    padding: 3vw;
+  }
+
+  #play-button {
+    font-size: 3vw;
+    padding: 2vw 4vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-title {
+    font-size: 12vw;
+  }
+
+  .game-board-placeholder {
+    width: 90vw;
+    height: 80vw;
+    gap: 2.5vw;
+    padding: 3.5vw;
+  }
+
+  #play-button {
+    font-size: 4vw;
+    padding: 3vw 5vw;
+  }
 }
