@@ -34,10 +34,14 @@ function renderBoard() {
 
 function makeMove(column) {
   const row = getAvailableRow(column);
-  if (row === -1) return;
+  if (row === -1) return; // Coluna cheia
 
+  // Atribui a jogada ao board e renderiza o tabuleiro
   board[row][column] = currentPlayer;
   renderBoard();
+
+  // Adiciona a animação de queda na célula da jogada
+  addDropAnimation(row, column, currentPlayer);
 
   if (checkVictory(row, column, currentPlayer)) {
     displayMessage(
@@ -46,9 +50,30 @@ function makeMove(column) {
     setTimeout(() => initializeBoard(), 3000);
     return;
   }
+
+  // Alterna para o próximo jogador
   currentPlayer = currentPlayer === "player1" ? "player2" : "player1";
 
+  // Se for a vez da IA, executa o movimento da IA
   if (currentPlayer === "player2") playAI();
+}
+
+function addDropAnimation(row, column, player) {
+  const boardElement = document.getElementById("board");
+  const cellIndex = row * columns + column; // Calcula o índice da célula no grid
+  const cell = boardElement.children[cellIndex];
+
+  // Adiciona a classe do jogador com a animação
+  cell.classList.add(player, "drop-animation");
+
+  // Remove a classe de animação após a animação terminar
+  cell.addEventListener(
+    "animationend",
+    () => {
+      cell.classList.remove("drop-animation");
+    },
+    { once: true }
+  );
 }
 
 function getAvailableRow(column) {
@@ -150,10 +175,13 @@ function minimax(board, depth, isMaximizing) {
   return bestScore;
 }
 
+// Otimização da poda Alfa-Beta com priorização das colunas centrais
 function alphaBetaDecision() {
   let bestScore = -Infinity;
   let bestColumn = 0;
-  for (let col = 0; col < columns; col++) {
+  const columnsOrder = [3, 4, 2, 5, 1, 6, 0, 7]; // Avaliar colunas do centro para as bordas
+
+  for (const col of columnsOrder) {
     const row = getAvailableRow(col);
     if (row === -1) continue;
     board[row][col] = "player2";
@@ -200,7 +228,51 @@ function alphaBeta(board, depth, alpha, beta, isMaximizing) {
 }
 
 function evaluateBoard() {
-  return 0;
+  // Função de avaliação mais detalhada para pontuar o tabuleiro
+  let score = 0;
+
+  // Pontuação para peças consecutivas (exemplo, ajuste conforme necessário)
+  const patterns = [
+    { player: "player2", count: 2, score: 10 },
+    { player: "player2", count: 3, score: 100 },
+    { player: "player2", count: 4, score: 1000 },
+    { player: "player1", count: 2, score: -10 },
+    { player: "player1", count: 3, score: -100 },
+    { player: "player1", count: 4, score: -1000 },
+  ];
+
+  for (const pattern of patterns) {
+    score += countConsecutive(pattern.player, pattern.count) * pattern.score;
+  }
+
+  return score;
+}
+
+function countConsecutive(player, count) {
+  let total = 0;
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < columns; col++) {
+      total += countPattern(row, col, player, 1, 0, count); // horizontal
+      total += countPattern(row, col, player, 0, 1, count); // vertical
+      total += countPattern(row, col, player, 1, 1, count); // diagonal /
+      total += countPattern(row, col, player, 1, -1, count); // diagonal \
+    }
+  }
+  return total;
+}
+
+function countPattern(row, col, player, rowDir, colDir, length) {
+  let count = 0;
+  for (let i = 0; i < length; i++) {
+    const r = row + i * rowDir;
+    const c = col + i * colDir;
+    if (r >= 0 && r < rows && c >= 0 && c < columns && board[r][c] === player) {
+      count++;
+    } else {
+      return 0;
+    }
+  }
+  return count === length ? 1 : 0;
 }
 
 function getWinner() {
