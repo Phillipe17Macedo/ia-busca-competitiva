@@ -3,64 +3,123 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  font-family: "Fredoka One", sans-serif;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
   color: #333;
+  margin: 0;
+  height: 100vh;
+  padding-bottom: 50px;
 }
 
+/* Título */
 h1 {
   margin-top: 20px;
+  font-size: 3em;
+  color: #ffffff;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), -2px -2px 5px #1976d2;
+  letter-spacing: 1px;
 }
 
+/* Controles */
 #controls {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 15px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
+#controls button {
+  padding: 12px 25px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 1em;
+}
+
+#controls button:hover {
+  background-color: #388e3c;
+  transform: translateY(-2px) scale(1.05);
+}
+
+#controls label {
+  font-weight: bold;
+  color: #fff;
+  font-size: 1.1em;
+}
+
+#controls input[type="number"] {
+  width: 60px;
+  padding: 8px;
+  border: 2px solid #4caf50;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 1em;
+  color: #333;
+}
+
+/* Tabuleiro e Container */
 #board-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #003366;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  margin: 20px;
+  background-color: #00264d;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  margin: 10px;
 }
 
 #board {
   display: grid;
-  grid-template-columns: repeat(8, 60px);
-  grid-template-rows: repeat(7, 60px);
-  gap: 5px;
+  grid-template-columns: repeat(8, 70px);
+  grid-template-rows: repeat(7, 70px);
+  gap: 8px;
   background-color: #003366;
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 15px;
+  padding: 15px;
 }
 
+/* Células do Tabuleiro */
 .cell {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   background-color: #ffffff;
   border-radius: 50%;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3), 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
 }
 
+/* Efeito Hover nas Células */
+.cell:hover {
+  transform: scale(1.1);
+}
+
+/* Estilos das Moedas dos Jogadores */
 .player1 {
-  background-color: red;
-  animation: drop 0.3s ease;
+  background-color: #e53935;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 .player2 {
-  background-color: yellow;
-  animation: drop 0.3s ease;
+  background-color: #ffeb3b;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
-@keyframes drop {
+/* Animação de Queda para a Moeda */
+.drop-animation {
+  animation: dropCoin 0.5s ease-out forwards;
+}
+
+@keyframes dropCoin {
   0% {
-    transform: translateY(-50px);
+    transform: translateY(-300px);
     opacity: 0;
   }
   100% {
@@ -69,10 +128,12 @@ h1 {
   }
 }
 
+/* Mensagem de Status */
 #message {
   margin: 15px;
-  font-size: 1.2em;
-  color: #333;
+  font-size: 1.3em;
+  color: #ffffff;
   font-weight: bold;
   text-align: center;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
 }
