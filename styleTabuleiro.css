@@ -1,0 +1,78 @@
+/* Estilo Geral */
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+h1 {
+  margin-top: 20px;
+}
+
+#controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+#board-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #003366;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 20px;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(8, 60px);
+  grid-template-rows: repeat(7, 60px);
+  gap: 5px;
+  background-color: #003366;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.cell {
+  width: 60px;
+  height: 60px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.player1 {
+  background-color: red;
+  animation: drop 0.3s ease;
+}
+
+.player2 {
+  background-color: yellow;
+  animation: drop 0.3s ease;
+}
+
+@keyframes drop {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+#message {
+  margin: 15px;
+  font-size: 1.2em;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+}
