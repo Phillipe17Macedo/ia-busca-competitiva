@@ -44,7 +44,7 @@ body {
 
 /* Tabuleiro de Exemplo */
 .game-board-placeholder {
-  width: 500px; /* Baseado na largura da tela */
+  width: 400px; /* Baseado na largura da tela */
   height: 600px; /* Proporcional à largura */
   background-color: #1976d2;
   border-radius: 15px;
