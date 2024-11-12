@@ -1,3 +1,18 @@
+/* Variáveis */
+:root {
+  --primary-color: #2196f3;
+  --secondary-color: #ffeb3b;
+  --highlight-color: #ffc107;
+  --background-gradient: linear-gradient(135deg, #6a11cb, #2575fc);
+  --button-color: #4caf50;
+  --button-hover-color: #388e3c;
+  --board-bg: #1976d2;
+  --cell-color: #ffeb3b;
+  --cell-alt-color: #f44336;
+  --cell-shadow: rgba(0, 0, 0, 0.4);
+  --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
 /* Estilo Geral */
 body {
   display: flex;
@@ -6,7 +21,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   color: #333;
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  background: var(--background-gradient);
   height: 100vh;
   overflow: hidden;
 }
@@ -26,9 +41,10 @@ body {
 /* Título do Jogo */
 .game-title {
   font-family: "Fredoka One", sans-serif;
-  font-size: 8vw; /* Tamanho responsivo baseado na largura da tela */
-  color: #2196f3;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), -2px -2px 4px #ffeb3b;
+  font-size: 8vw;
+  color: var(--primary-color);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3),
+    -2px -2px 4px var(--secondary-color);
   margin-bottom: 20px;
   animation: bounce 1.5s ease-in-out infinite alternate;
 }
@@ -44,48 +60,42 @@ body {
 
 /* Tabuleiro de Exemplo */
 .game-board-placeholder {
-  width: 400px; /* Baseado na largura da tela */
-  height: 600px; /* Proporcional à largura */
-  background-color: #1976d2;
+  width: 400px;
+  height: 600px;
+  background-color: var(--board-bg);
   border-radius: 15px;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(6, 1fr);
-  gap: 1.5vw; /* Espaço responsivo entre as células */
+  gap: 1.5vw;
   padding: 2vw;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--box-shadow);
   margin-bottom: 40px;
-  position: relative;
 }
 
 /* Células do Tabuleiro de Exemplo */
 .cell {
   width: 100%;
   height: 100%;
-  background-color: #ffeb3b;
+  background-color: var(--cell-color);
   border-radius: 50%;
-  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 4px 8px var(--cell-shadow);
   transition: background-color 0.3s ease;
 }
 
-/* Efeito de célula vazia e preenchida */
-.cell:nth-child(odd) {
-  background-color: #f44336;
-}
-
 .cell:nth-child(even) {
-  background-color: #ffeb3b;
+  background-color: var(--cell-alt-color);
 }
 
 .cell:hover {
-  background-color: #ffc107;
+  background-color: var(--highlight-color);
 }
 
-/* Botão Play com Efeitos */
+/* Botão Play */
 #play-button {
   font-size: 2vw;
   padding: 1.5vw 3vw;
-  background-color: #4caf50;
+  background-color: var(--button-color);
   color: #fff;
   border: none;
   border-radius: 50px;
@@ -119,15 +129,15 @@ body {
 }
 
 #play-button:hover {
-  background-color: #388e3c;
+  background-color: var(--button-hover-color);
   transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--box-shadow);
 }
 
-/* Responsividade para telas menores */
+/* Responsividade para Telas Menores */
 @media (max-width: 768px) {
   .game-title {
-    font-size: 10vw; /* Aumenta o título em telas menores */
+    font-size: 10vw;
   }
 
   .game-board-placeholder {
