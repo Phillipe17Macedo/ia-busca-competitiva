@@ -6,15 +6,44 @@ let plyDepth = 2;
 let aiAlgorithm = "minimax";
 const stateCache = {};
 
+// Variárveis do Contador
+let playerWins = 0;
+let aiWins = 0;
+
+const coinSound = new Audio("/assets/coin-point.mp3");
+const gameOverSound = new Audio("/assets/game-over.mp3");
+const redPlayerWinner = new Audio("/assets/red-player.mp3");
+const startGameSound = new Audio("/assets/start-game.mp3");
+
+startGameSound.loop = true;
+startGameSound.play();
+startGameSound.volume = 0.3;
+
 document.getElementById("play-button").addEventListener("click", () => {
   document.getElementById("home-screen").style.display = "none";
   document.getElementById("game-screen").style.display = "block";
+
+  startGameSound.pause();
+  startGameSound.currentTime = 0;
 });
+
+function updateWinCounters() {
+  document.getElementById(
+    "player-wins"
+  ).textContent = `Vitórias do Jogador: ${playerWins}`;
+  document.getElementById("ai-wins").textContent = `Vitórias da IA: ${aiWins}`;
+}
+
+function restartGame() {
+  initializeBoard();
+  displayMessage("Jogo reiniciado! Escolha uma profundidade e o modo de jogo.");
+}
 
 function initializeBoard() {
   board = Array.from({ length: rows }, () => Array(columns).fill(null));
   renderBoard();
   displayMessage("Escolha um modo de jogo e uma profundidade para começar!");
+  updateWinCounters();
 }
 
 function renderBoard() {
@@ -44,10 +73,28 @@ function makeMove(column) {
   addDropAnimation(row, column, currentPlayer);
 
   if (checkVictory(row, column, currentPlayer)) {
-    displayMessage(
-      `${currentPlayer === "player1" ? "Vermelho" : "Amarelo"} venceu!`
-    );
-    setTimeout(() => initializeBoard(), 3000);
+    if (currentPlayer === "player1") {
+      playerWins++;
+      displayMessage("Vermelho venceu!");
+      redPlayerWinner.play();
+    } else {
+      aiWins++;
+      displayMessage("Amarelo venceu!");
+      gameOverSound.play();
+    }
+
+    // Atualiza o contador na tela
+    updateWinCounters();
+
+    // Reinicia o jogo se um jogador tiver 3 vitórias
+    if (playerWins === 3 || aiWins === 3) {
+      playerWins = 0;
+      aiWins = 0;
+      displayMessage("Um dos jogadores alcançou 3 vitórias! Reiniciando...");
+      setTimeout(() => initializeBoard(), 4000); // Reinicia o jogo
+    } else {
+      setTimeout(() => initializeBoard(), 4000); // Reinicia o jogo normalmente
+    }
     return;
   }
 
@@ -62,6 +109,9 @@ function addDropAnimation(row, column, player) {
   const boardElement = document.getElementById("board");
   const cellIndex = row * columns + column; // Calcula o índice da célula no grid
   const cell = boardElement.children[cellIndex];
+
+  // Toca o som para cada peça adicionada
+  coinSound.play();
 
   // Adiciona a classe do jogador com a animação
   cell.classList.add(player, "drop-animation");
